@@ -1,0 +1,20 @@
+<!-- templates/prediction_result.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure Prediction Result</title>
+</head>
+<body>
+    <h1>Blood Pressure Prediction Result</h1>
+    
+    <p>Your predicted blood pressure is: <strong>{{ prediction }}</strong> mmHg.</p>
+    <p>Age: {{ age }} years</p>
+    <p>BMI: {{ bmi }}</p>
+    <p>Gender: {% if gender == 0 %} Male {% else %} Female {% endif %}</p>
+    
+    <a href="/predict_bp">Go back to prediction form</a>
+</body>
+</html>

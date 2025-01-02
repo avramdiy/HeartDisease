@@ -1,13 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import pandas as pd
 import plotly.express as px
 import json
+import pickle
 
 app = Flask(__name__, template_folder=r"C:\\Users\\Ev\\Desktop\\HeartDisease\\templates")
 
 # Load your DataFrame
 file_path = r"C:\\Users\\Ev\\Desktop\\HeartDisease\\heart_disease.csv"
 df = pd.read_csv(file_path)
+
+# Load the model
+with open("blood_pressure_model.pkl", "rb") as f:
+    model = pickle.load(f)
 
 # Query using pandas instead of pandasql
 # Filter for smokers with high blood pressure
@@ -63,6 +68,26 @@ def bmi_by_age():
 
     # Render the template with the plot and preview data
     return render_template("bmi_by_age.html", bmi_plot_json=bmi_plot_json, preview_html_bmi=preview_html_bmi)
+
+@app.route("/predict_bp", methods=["GET", "POST"])
+def predict_bp():
+    if request.method == "POST":
+        # Get user input from the form
+        gender = request.form.get("gender")
+        age = float(request.form.get("age"))
+        bmi = float(request.form.get("bmi"))
+        
+        # Convert gender to numerical value (Male = 0, Female = 1)
+        gender_map = {'Male': 0, 'Female': 1}
+        gender = gender_map.get(gender)
+        
+        # Make a prediction
+        prediction = model.predict([[age, bmi, gender]])[0]
+        
+        # Render the result in a new template
+        return render_template("prediction_result.html", prediction=prediction, age=age, bmi=bmi, gender=gender)
+
+    return render_template("predict_bp.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
