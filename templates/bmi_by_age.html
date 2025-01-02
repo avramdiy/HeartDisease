@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI by Age - Smokers with High Blood Pressure</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Add Bootstrap for table styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>BMI by Age (Smokers with High Blood Pressure)</h1>
+
+    <!-- Display the DataFrame preview -->
+    <h2>Data Preview (First 5 Rows)</h2>
+    <div>{{ preview_html_bmi | safe }}</div>
+
+    <!-- Plotly Chart -->
+    <div id="bmi-chart"></div>
+
+    <script>
+        var bmiPlot = {{ bmi_plot_json | safe }};  // Use the JSON data passed from Flask
+        Plotly.newPlot('bmi-chart', bmiPlot.data, bmiPlot.layout);
+    </script>
+</body>
+</html>

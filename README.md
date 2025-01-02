@@ -26,4 +26,10 @@
 
 ## 4th Commit
 
+- Added new route to query and visualize a difference of BMI for High Blood Pressure AND Smoking "YES" results.
+
+- Aggregated query data by Age & Gender.
+
+- Created a separate line chart and separate .html file for visualization.
+
 ## 5th Commit
