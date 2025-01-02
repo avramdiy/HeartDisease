@@ -18,9 +18,11 @@
 
 - Adjusted the query to pull results that said "Yes"  to Smoking and "Yes" to High Blood Pressure.
 
-- Loaded the aggregate blood pressure for female & male results by separate line charts, within the same visualization.
+- Loaded the blood pressure, aggregated by Age, for female & male results by separate line charts, within the same visualization.
 
 ## 3rd Commit
+
+- Adjusted data.py to show the aggregated average blood pressure by age, through two new line plots for Male and Female respectively.
 
 ## 4th Commit
 
