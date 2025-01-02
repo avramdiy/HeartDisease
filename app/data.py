@@ -7,30 +7,43 @@ import json
 
 app = Flask(__name__, template_folder=r"C:\\Users\\Ev\\Desktop\\HeartDisease\\templates")
 
-# Specify the file path
+# Load your DataFrame
 file_path = r"C:\\Users\\Ev\\Desktop\\HeartDisease\\heart_disease.csv"
-
-# Load the CSV file into a pandas DataFrame
 df = pd.read_csv(file_path)
 
-# Use pandasql to run an SQL query on the DataFrame
+# Example SQL query to filter for smokers with high blood pressure
 query = """
 SELECT * 
 FROM df
-WHERE "Age" > 50
+WHERE "Smoking" = 'Yes' AND "High Blood Pressure" = 'Yes'
 """
-filtered_df = pandasql.sqldf(query, locals())
 
-# Create a Plotly figure
-def create_plot(dataframe):
-    fig = px.bar(dataframe, x="Age", y="Cholesterol Level", color="Gender", title="Cholesterol Levels by Age (Age > 50)")
+# Execute the query on the DataFrame
+filtered_df_smokers_high_bp = pandasql.sqldf(query, locals())
+
+# Execute the query on the DataFrame
+filtered_df_smokers_high_bp = pandasql.sqldf(query, locals())
+
+# Aggregate the data by 'Age' and 'Gender' to avoid clutter
+aggregated_df = filtered_df_smokers_high_bp.groupby(['Age', 'Gender'], as_index=False).agg({'Blood Pressure': 'mean'})
+
+# Create Plotly figure function with markers and aggregated data
+def create_plot(dataframe, title, x_col, y_col):
+    fig = px.line(dataframe, x=x_col, y=y_col, color="Gender", markers=True, title=title)
     return fig.to_json()
 
+# Flask route
 @app.route("/")
 def home():
-    # Generate the visualization
-    plot = create_plot(filtered_df)
-    return render_template("index.html", plot=plot)
+    # Create plots for each query
+    plot1 = create_plot(aggregated_df, "Blood Pressure by Age (Smokers with High Blood Pressure)", "Age", "Blood Pressure")
+    
+    # Get the first 5 rows of the filtered DataFrame for preview
+    preview_df_smokers_high_bp = filtered_df_smokers_high_bp.head()
+    preview_html_smokers_high_bp = preview_df_smokers_high_bp.to_html(classes='table table-striped')
+
+    # Render the template with the plot and preview data
+    return render_template("index.html", plot1=plot1, preview_html_smokers_high_bp=preview_html_smokers_high_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)

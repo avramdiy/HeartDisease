@@ -14,6 +14,12 @@
 
 ## 2nd Commit
 
+- Modified the "/" route & index.html to display a 5 row header to understand all features in the CSV file.
+
+- Adjusted the query to pull results that said "Yes"  to Smoking and "Yes" to High Blood Pressure.
+
+- Loaded the aggregate blood pressure for female & male results by separate line charts, within the same visualization.
+
 ## 3rd Commit
 
 ## 4th Commit

@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Visualization</title>
+    <title>Heart Disease Data Visualization</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Add Bootstrap for table styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <h1>Heart Disease Data Visualization</h1>
-    <div id="chart"></div>
+
+    <!-- Display the DataFrame preview -->
+    <h2>Data Preview (Smokers with High Blood Pressure)</h2>
+    <div>{{ preview_html_smokers_high_bp | safe }}</div>
+
+    <!-- Plotly Chart for Blood Pressure by Age (Smokers with High Blood Pressure) -->
+    <h2>Blood Pressure by Age (Smokers with High Blood Pressure)</h2>
+    <div id="chart1"></div>
+
     <script>
-        var plot = {{ plot | safe }};
-        Plotly.newPlot('chart', plot.data, plot.layout);
+        var plot1 = {{ plot1 | safe }};  // Blood Pressure plot for Smokers with High Blood Pressure
+        Plotly.newPlot('chart1', plot1.data, plot1.layout);
     </script>
 </body>
 </html>
